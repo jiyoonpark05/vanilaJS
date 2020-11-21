@@ -1,0 +1,2 @@
+# vanilaJS
+practicing vanilaJS
