@@ -30,26 +30,26 @@ function writeMessage(msg) {
 //check msg against number
 function checkNumber(msg) {
   const num = +msg;
+  msgEl.innerHtml += "<div> check</div>";
+
+  console.log(num);
 
   if (Number.isNaN(num)) {
-    msgEl.innerHtml += `<div><That is not a valid number</div>`;
-    return;
+    msgEl.innerHTML += `<div>${msg} is not a valid number</div>`;
   }
-  if (num > 100 || num < 1) {
-    msgEl.innerHtml += `<div>Number must be between 1 and 100</div>`;
-    return;
-  }
-  if (num === randomNum) {
-    document.body.innerHTML = `
-        <h2>Congrates! you have guessed the number<br><br>
-        it was ${num}</h2>
-        <button class="play-again" id = "play-again">play again</button>
-        `;
 
-  } else if (num > randomNum) {
-    msgEl.innerHTML += `<div>go lower</div>`;
-  } else {
-    msgEl.innerHtml += `<div>Go Higher </div>`;
+  // Check in range
+  if (num > 100 || num < 1) {
+    msgEl.innerHTML += "<div>Number must be between 1 and 100</div>";
+  }
+
+  //check number
+  if (num == randomNum) {
+    document.body.innerHTML = `
+   <h2>Congrats! you have guessed the number! <br><br>
+   It was ${num}</h2>
+   <button class="play-again" id="play-again"> play again</button>
+   `;
   }
 }
 
