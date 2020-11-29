@@ -4,12 +4,52 @@ const nextBtn = document.getElementById("next");
 const currentEl = document.getElementById("current");
 const showBtn = document.getElementById("show");
 const hideBtn = document.getElementById("hide");
-const questionEl = document.getElementById("question");
-const answerEl = document.getElementById("answer");
+const wordEl = document.getElementById("word");
+const meaningEl = document.getElementById("meaning");
 const addCardBtn = document.getElementById("add-card");
 const clearBtn = document.getElementById("clear");
 const addContainer = document.getElementById("add-container");
+const answerEl = document.getElementById("answer");
 
+window.SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const recognition = new window.SpeechRecognition();
+
+//start recognition
+recognition.start();
+
+//capture user speak
+function onSpeak(e) {
+  const answer = e.results[0][0].transcript;
+
+  checkAnswer(answer);
+}
+function writeAnswer(answer) {
+  const correctAnswer = cardsData[currentActiveCard].word;
+  answerEl.innerHTML = `
+  <div>🚨 wrong 🚨 you said : ${answer}</div>
+  <div>😊 right answer is " ${correctAnswer} "</div>
+  `;
+}
+// speak result
+recognition.addEventListener("result", onSpeak);
+
+// checkAnswer
+function checkAnswer(answer) {
+  const yourAnswer = answer;
+  const meaning = cardsData[currentActiveCard].word;
+  console.log(cardsData);
+  console.log(meaning);
+  if (yourAnswer == meaning) {
+    nextBtn.click();
+    recognition.addEventListener("end", () => recognition.start());
+  }
+
+  if (yourAnswer != meaning) {
+    writeAnswer(answer);
+  }
+}
 // Keep track of current card
 let currentActiveCard = 0;
 
@@ -37,12 +77,14 @@ function createCard(data, index) {
     <div class="inner-card">
     <div class="inner-card-front">
         <p>
-        ${data.question}
+        ${data.meaning}
+        <br/>
+        
         </p>
     </div>
     <div class="inner-card-back">
         <p>
-        ${data.answer}
+        ${data.word}
         </p>
     </div>
     </div>
@@ -116,16 +158,16 @@ hideBtn.addEventListener("click", () => addContainer.classList.remove("show"));
 
 // Add new card
 addCardBtn.addEventListener("click", () => {
-  const question = questionEl.value;
-  const answer = answerEl.value;
+  const word = wordEl.value;
+  const meaning = meaningEl.value;
 
-  if (question.trim() && answer.trim()) {
-    const newCard = { question, answer };
+  if (word.trim() && meaning.trim()) {
+    const newCard = { word, meaning };
 
     createCard(newCard);
 
-    questionEl.value = "";
-    answerEl.value = "";
+    wordEl.value = "";
+    meaningEl.value = "";
 
     addContainer.classList.remove("show");
 
