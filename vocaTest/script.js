@@ -32,6 +32,7 @@ function writeAnswer(answer) {
   <div>😊 right answer is " ${correctAnswer} "</div>
   `;
 }
+
 // speak result
 recognition.addEventListener("result", onSpeak);
 
