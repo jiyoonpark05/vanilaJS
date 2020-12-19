@@ -3,10 +3,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <section class="intro">
   <div class="container">
-    <h1>
-      2020년에는 무슨 일이 일어났나요?
-      <img src="image/writeIcon.png" alt="Write" onclick="showPopup();" />
-    </h1>
+    <h1>J의 2020년</h1>
+    <h2>
+      무슨 일이 일어났나요?
+      <img src="image/writeIcon.png" alt="Write" onclick="openPopup();" />
+    </h2>
   </div>
 </section>
 <section class="timeline">
@@ -19,12 +20,6 @@
     </li>
     <li>
       <div>
-        <time>2020 2월</time>
-        <content>무슨 일이 일어나고 있나요</content>
-      </div>
-    </li>
-    <li>
-      <div>
         <time>2020 1월</time>
         <content>임시값</content>
       </div>
@@ -71,7 +66,13 @@
         <content>임시값</content>
       </div>
     </li>
-    <li id="chatBox-container"></li>
+    <li>
+      <div>
+        <time>2020 1월</time>
+        <content>임시값</content>
+      </div>
+    </li>
   </ul>
+  <ul id="chatBox-container"></ul>
 </section>
 <script src="script.js"></script>

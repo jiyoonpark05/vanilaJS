@@ -6,11 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>what happened in 2020</title>
   </head>
-  <bod>
-    <h4 id="time">2020년 8월</h3>
-    <textarea id="epiosode" placeholder="무슨일이 일어났나요?"></textarea>
-    <button onclick="addEpisode();">등록</button>
-    <button onclick="closePopup();">닫기</button>
-  </bod>
+  <body>
+    <form id="form">
+      <!-- <h4 id="time">2020년 8월</h3> -->
+      <div class="slectMonth">
+        <select id="month">
+          <option value="1">1월</option>
+          <option value="2">2월</option>
+          <option value="3">3월</option>
+          <option value="4">4월</option>
+        </select>
+      </div>
+      <textarea id="epiosode" placeholder="무슨일이 일어났나요?"></textarea>
+      <div id="btnContainer">
+        <a id="post" onclick="addEpisode();">등록</a>
+        <a id="cancel" onclick="closePopup();">닫기</a>
+      </div>
+    </form>
+  </body>
   <script src="script.js"></script>
 </html>

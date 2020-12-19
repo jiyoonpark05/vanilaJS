@@ -16,17 +16,10 @@ function callbackFunc() {
   for (var i = 0; i < items.length; i++) {
     if (isElementInViewPort(items[i])) {
       items[i].classList.add("in-view");
+    } else {
+      items[i].classList.remove("in-view");
     }
   }
-}
-
-// more episode 등록 팝업
-function showPopup() {
-  window.open("popup.html", "more_episode", "width = 558px, height = 466");
-}
-// close popup
-function closePopup() {
-  window.close();
 }
 
 // store DOM episodes
@@ -41,27 +34,59 @@ function getEpisodeData() {
   return episodes === null ? [] : episodes;
 }
 
+// create chatBoxes
+function createBoxes() {
+  episodeData.forEach((data) => createChatBox(data));
+}
+
 // add episodes to local storage
 function setEpisodeData(episodes) {
   localStorage.setItem("episode", JSON.stringify(episodes));
   window.location.reload;
 }
+createBoxes();
+// more episode popup
+function openPopup() {
+  const popupSize = {
+    width: 583,
+    height: 366,
+  };
+  const left = screen.width / 2 - popupSize.width / 2;
+  const top = screen.height / 2 - popupSize.height / 2;
+
+  window.open(
+    "popup.html",
+    "popup-test",
+    "width=" +
+      popupSize.width +
+      ", height=" +
+      popupSize.height +
+      ", left=" +
+      left +
+      ", top=" +
+      top
+  );
+}
+
+// close popup
+function closePopup() {
+  window.close();
+}
 
 // episode 등록
-function newChatBox(data) {
+function createChatBox(data) {
   console.log(data.episode);
+
   const chatBoxContainer = document.getElementById("chatBox-container");
   const chatBox = document.createElement("li");
-  //   chatBox.classList.add("chatBox");
+  chatBox.classList.add("in-view");
 
   chatBox.innerHTML = `
-    <li>
-        <div>
-            <time>${data.time}</time>
-            <content>${data.episode}</content>
-        </div>
-    </li>
-  `;
+  <div>
+    <time>2020년 ${data.time}</time>
+    <content>${data.episode}</content>
+  </div>
+   `;
 
   //   Add to Dom episodes
   episodeEl.push(chatBox);
@@ -71,16 +96,17 @@ function newChatBox(data) {
 
 // new episode
 function addEpisode() {
-  const time = document.getElementById("time").value;
+  const time = document.getElementById("month").value;
   const episode = document.getElementById("epiosode").value;
   const newEpisode = { time, episode };
 
-  newChatBox(newEpisode);
-
   episodeData.push(newEpisode);
   setEpisodeData(episodeData);
+
   window.close();
+  opener.parent.location.reload();
 }
+
 window.addEventListener("load", callbackFunc);
 window.addEventListener("resize", callbackFunc);
 window.addEventListener("scroll", callbackFunc);
