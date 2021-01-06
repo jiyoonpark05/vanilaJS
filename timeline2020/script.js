@@ -1,6 +1,6 @@
-const items = document.querySelectorAll(".timeline li");
 
-// element가 viewport 안에 있는지 확인
+
+// check element in viewport
 function isElementInViewPort(el) {
   const rect = el.getBoundingClientRect();
   return (
@@ -13,6 +13,8 @@ function isElementInViewPort(el) {
 }
 
 function callbackFunc() {
+  const items = document.querySelectorAll(".timeline li");
+
   for (var i = 0; i < items.length; i++) {
     if (isElementInViewPort(items[i])) {
       items[i].classList.add("in-view");
@@ -44,8 +46,10 @@ function setEpisodeData(episodes) {
   localStorage.setItem("episode", JSON.stringify(episodes));
   window.location.reload;
 }
+
 createBoxes();
-// more episode popup
+
+// episode popup
 function openPopup() {
   const popupSize = {
     width: 583,
@@ -75,20 +79,19 @@ function closePopup() {
 
 // episode 등록
 function createChatBox(data) {
-  console.log(data.episode);
-
   const chatBoxContainer = document.getElementById("chatBox-container");
   const chatBox = document.createElement("li");
+
   chatBox.classList.add("in-view");
 
   chatBox.innerHTML = `
   <div>
-    <time>2020년 ${data.time}</time>
+    <time>2020년 ${data.time}월</time>
     <content>${data.episode}</content>
   </div>
    `;
 
-  //   Add to Dom episodes
+  //  Add to Dom episodes
   episodeEl.push(chatBox);
 
   chatBoxContainer.appendChild(chatBox);
@@ -99,12 +102,18 @@ function addEpisode() {
   const time = document.getElementById("month").value;
   const episode = document.getElementById("epiosode").value;
   const newEpisode = { time, episode };
+  const oldEpisode = JSON.parse(localStorage.getItem("episode"));
 
-  episodeData.push(newEpisode);
-  setEpisodeData(episodeData);
+  console.log(oldEpisode);
+  console.log(JSON.stringify(newEpisode))
 
-  window.close();
-  opener.parent.location.reload();
+    episodeData.push(newEpisode);
+    setEpisodeData(episodeData);
+
+    window.close();
+    opener.parent.location.reload();
+
+
 }
 
 window.addEventListener("load", callbackFunc);
